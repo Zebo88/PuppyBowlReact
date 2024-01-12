@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import { addPlayer } from "./api";
 
-export default function AddPlayerForm(){
+export default function AddPlayerForm({ playerAdded, setPlayerAdded}){
   const [playerName, setPlayerName] = useState("");
   const [playerBreed, setPlayerBreed] = useState("");
   const [teamId, setTeamId] = useState("");
+  const [playerStatus, setPlayerStatus] = useState("");
   const [imgURL, setImgURL] = useState("");
   // const [error, setError] = useState(null);
 
   async function handleSubmit(event){
     event.preventDefault();
 
-    addPlayer(playerName, playerBreed, teamId, imgURL);
-    // document.getElementsByClassName("form").reset();
+    await addPlayer(playerName, playerBreed, teamId, playerStatus, imgURL);
+    setPlayerName("");
+    setPlayerBreed("");
+    setTeamId("");
+    setPlayerStatus("");
+    setImgURL("");
+    setPlayerAdded(true);
   };
   
   return (
@@ -34,7 +40,7 @@ export default function AddPlayerForm(){
         <label>
           Breed:
           <input 
-            id="PW" 
+            id="br" 
             type="text"
             value={ playerBreed } 
             onChange={ (e) => setPlayerBreed(e.target.value)}
@@ -43,11 +49,21 @@ export default function AddPlayerForm(){
         <label>
           Team ID:
           <input 
-            id="PW" 
+            id="id" 
             type="text"
             value={ teamId } 
             onChange={ (e) => setTeamId(e.target.value)}
             placeholder="1 or 2"
+           />
+        </label>
+        <label>
+          Status:
+          <input 
+            id="st" 
+            type="text"
+            value={ playerStatus } 
+            onChange={ (e) => setPlayerStatus(e.target.value)}
+            placeholder="Field or Bench"
            />
         </label>
         <label>

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { getAllPlayers } from "./api";
+import { getAllPlayers, removePlayer } from "./api";
 
-
-export default function AllPlayers({ playerSelected, setPlayerSelected, playerId, setPlayerId }){
+export default function AllPlayers({ playerSelected, setPlayerSelected, playerId, setPlayerId, playerAdded, setPlayerAdded }){
   const [playerList, setPlayerList] = useState([]);
+  const [playerRemoved, setPlayerRemoved] = useState(false);
 
   useEffect(() => {
     async function getPlayers(){
       const players = await getAllPlayers();
       setPlayerList(players);
+      setPlayerRemoved(false);
     }
     getPlayers();
 
-  },[]);
+  },[playerRemoved, playerAdded]);
 
   return (
     <ul>
@@ -29,6 +30,12 @@ export default function AllPlayers({ playerSelected, setPlayerSelected, playerId
                 }                
               }>
               Details
+            </button>
+            <button onClick={() => {
+              removePlayer(player.id);
+              setPlayerRemoved(true);
+            }}>
+              Remove
             </button>
           </li>)
         })

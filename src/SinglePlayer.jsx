@@ -26,7 +26,6 @@ export default function SinglePlayer({ playerSelected, setPlayerSelected, player
           <br />
           <button onClick={() => {
             setPlayerSelected(false);
-            // setPlayerId(null);//This probably isn't needed, so I'm excluding.
             }
           }>
             Return

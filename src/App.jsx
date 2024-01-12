@@ -8,16 +8,22 @@ import AddPlayerForm from './PlayerForm';
 function App() {
   const [playerSelected, setPlayerSelected] = useState(false);
   const [playerId, setPlayerId] = useState(null);
+  const [playerAdded, setPlayerAdded] = useState(false);
 
   return (
     <>
-    <AddPlayerForm />
+    <AddPlayerForm 
+      playerAdded={playerAdded}
+      setPlayerAdded={setPlayerAdded}
+    />
     {!playerSelected && 
       <AllPlayers 
       playerId={playerId}
       setPlayerId={setPlayerId}
       playerSelected={playerSelected} 
       setPlayerSelected={setPlayerSelected}
+      playerAdded={playerAdded}
+      setPlayerAdded={setPlayerAdded}
       />
     }
     {playerSelected &&

@@ -1,4 +1,5 @@
 import React from "react";
+import getPlayers from "../AllPlayers";
 
 const cohortName = '2309-ftb-et-web-pt';
 const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/2309-ftb-et-web-pt/players`;
@@ -29,7 +30,7 @@ export async function getSinglePlayer(playerId){
 }
 
 //function to call api to post player
-export async function addPlayer(playerName, playerBreed, teamId, imgUrl){
+export async function addPlayer(playerName, playerBreed, teamId, playerStatus, imgUrl){
 
   try {
       const response = await fetch(API_URL, {
@@ -39,6 +40,7 @@ export async function addPlayer(playerName, playerBreed, teamId, imgUrl){
               name: playerName,
               breed: playerBreed,
               teamId: teamId,
+              // status: playerStatus,
               imageUrl: imgUrl,
           })
       });
@@ -47,9 +49,26 @@ export async function addPlayer(playerName, playerBreed, teamId, imgUrl){
           throw new Error("Failed to create player!")
       }
 
-      getAllPlayers();
-
   } catch (err) {
       console.error('Oops, something went wrong with adding that player!', err);
+  }
+}
+
+export async function removePlayer(playerId){
+  console.log(`Player selected for removal: id ${playerId}`);
+  try {
+    const response = await fetch(`${API_URL}/${playerId}`,{
+      method: "DELETE",
+    });
+        //Check if the request was successful:
+        if (!response.ok){
+          throw new Error("Player could not be removed.")
+      }
+
+  } catch (error) {
+    console.error(
+            `Whoops, trouble removing player #${playerId} from the roster!`,
+            error
+        );
   }
 }
